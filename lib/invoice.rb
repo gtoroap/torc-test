@@ -1,36 +1,18 @@
 require_relative 'item_line'
 
 class Invoice
-  TAX_RATE = 0.1
-  IMPORTED_RATE = 0.05
-  ROUNDED_TO = 0.05
-
-  attr_accessor :taxes
+  attr_accessor :taxes, :item_lines
   def initialize(item_lines)
     @item_lines = item_lines
-    @taxes = 0.0
   end
 
-  def apply_taxes
+  def print_receipt
+    result = ''
     @item_lines.each do |item_line|
-      @taxes += calculate_taxes(item_line)
+      result += "#{item_line.quantity} #{item_line.description}: #{item_line.total}\n"
     end
-
-    @taxes = @taxes.truncate(2)
-  end
-
-  private
-
-  def calculate_taxes(item)
-    taxes = 0.0
-    taxes = item.quantity * round_by(item.price * TAX_RATE, ROUNDED_TO) if item.apply_tax?
-    taxes += item.quantity * round_by(item.price * IMPORTED_RATE, ROUNDED_TO) if item.imported
-
-    taxes
-  end
-
-  def round_by(value, increment)
-    (value / increment).round * increment
+    result += "Sales Taxes: #{@item_lines.sum(&:taxes_in_total).truncate(2)}\n"
+    result += "Total: #{@item_lines.sum(&:total).truncate(2)}\n\n"
   end
 end
 

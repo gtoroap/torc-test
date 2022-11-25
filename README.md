@@ -48,3 +48,11 @@ Total: 65.15
 3 imported box of chocolates: 35.55
 Sales Taxes: 7.90
 Total: 98.38
+
+# How to execute the program
+
+## Considerations
+- Need to be sure to populate `invoices.txt` file with proper data.
+- Each invoice should have only lines with items and it should be separated by empty lines.
+
+Once you have proper data, run this command `ruby lib/main.rb` in project folder.

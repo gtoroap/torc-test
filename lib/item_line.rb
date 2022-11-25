@@ -46,15 +46,15 @@ class ItemLine
     [quantity, description, price, imported]
   end
 
-  private
-
   def calculate_taxes
     return unless valid?
-
-    @taxes = round_by(price * TAX_RATE, ROUNDED_TO) if apply_tax?
-    @taxes += round_by(price * IMPORTED_RATE, ROUNDED_TO) if imported
-    @taxes.round(2)
+    
+    @taxes = round_by(price * TAX_RATE, ROUNDED_TO).round(2) if apply_tax?
+    @taxes += round_by(price * IMPORTED_RATE, ROUNDED_TO).round(2) if imported
+    @taxes
   end
+
+  private
 
   def round_by(value, increment)
     (value / increment).ceil * increment

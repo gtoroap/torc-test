@@ -6,9 +6,6 @@ RSpec.describe Invoice do
   let(:item_lines) { [item_line_1, item_line_2] }
   let(:invoice) { Invoice.new(item_lines)}
   let(:printed_receipt) { "1 book: 10.0\n1 apple: 2.0\nSales Taxes: 0.0\nTotal: 12.0\n\n" }
-
-  let(:wrong_item_lines) { [ItemLine.new('bad', 'bad', 'bad', 'bad'), ItemLine.new('wrong', 'wrong', 'wrong', 'wrong')] }
-  let(:invalid_invoice) { Invoice.new(wrong_item_lines)}
   
   context '#initialize' do
     context 'when no item_lines' do
@@ -25,6 +22,9 @@ RSpec.describe Invoice do
   end
 
   context '#valid?' do
+    let(:wrong_item_lines) { [ItemLine.new('bad', 'bad', 'bad', 'bad'), ItemLine.new('wrong', 'wrong', 'wrong', 'wrong')] }
+    let(:invalid_invoice) { Invoice.new(wrong_item_lines)}
+
     context 'when item_lines are invalid' do
       it 'should return false' do
         expect(invalid_invoice.valid?).to be false
